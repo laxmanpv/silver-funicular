@@ -1,0 +1,44 @@
+<form action="https://www.paypal.com/cgi-bin/webscr" id="PPG_Form" method="post" name="PPG_Form" target="paypal_interface"><style type="text/css">body { background-color: white ; color: black } a { color: black  } p {font-family: arial,sans-serif;font-size: 12px;} </style>
+<fieldset><legend><b>Pay for this Activity Now</b></legend>  
+<input name="_charset_" type="hidden" value="utf-8"> 
+<input type="hidden" name="business" value="payments@troop33.org">
+<input type="hidden" name="cmd" value="_xclick">
+<input type="hidden" name="item_name" id="item_name" value="<empty>">
+<input type="hidden" name="amount" id="amount" value="0.00">
+<select id="activities_select">
+</select>
+<input type="hidden" name="currency_code" value="USD">
+<table><tbody>
+<tr><td><input type="hidden" name="on0" value="for_"><font size="2">Enter Participant Name for Payment:</font></td></tr>
+<tr><td><input type="text" name="os0" maxlength="200" required=""></td></tr>
+</tbody></table>
+<p><label id="label-name" for="activity" style="color:Tomato;">Your selection is...</label>
+<p><input type="image" src="https://www.paypalobjects.com/webstatic/en_US/btn/btn_paynow_cc_144x47.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"><img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1"></fieldset></form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+var activities = [
+  {"amount":0.12,"activityname":"Emerald Bay - Parent"},
+  {"amount":0.13,"activityname":"Emerald Bay"},
+  {"amount":0.11,"activityname":"Pinnacles"},
+];
+
+$("#activities_select").ready(function(){
+	var options = '';
+	for (var i = 0; i < activities.length; i++) {
+	   options += '<option data-amount="' + activities[i].amount+ '"' + ' data-activityname="' + activities[i].activityname + '">' 
+	   + activities[i].activityname  + ' - ' + activities[i].amount + '</option>';
+	}
+	$("#activities_select").html(options);
+	$("#activities_select").change();
+});
+$("#activities_select").change(function(){
+	$(":input#item_name").val($(this).find(":selected").data("activityname"));
+	$(":input#amount").val($(this).find(":selected").data("amount"));
+	var activityname = $(":input#item_name").val();
+	var amount = $(":input#amount").val();
+	var message = "You are making a payment in the amount of " + amount + " for " + activityname;
+	$("#label-name").text(message);
+	console.log(message);
+});
+</script>
